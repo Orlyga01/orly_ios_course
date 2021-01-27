@@ -9,19 +9,30 @@ import SwiftUI
 
 class EmojiMemoryGame: ObservableObject {
     // static is not part of the instance of the class so we can use it at any time the class is initiated
-    @Published private var model: MemoryGame<String> = EmojiMemoryGame.createMemoryGame()
-    static func createMemoryGame() -> MemoryGame<String> {
-        let emojiArray: Array<String> = ["☠️", "🤢", "🤖","😈","👍"]
-        return MemoryGame<String>(numberOfPairsOfCards: Int.random(in: 2...5)) { index in
-            return emojiArray[index]
+    @Published private var model: MemoryGame<String>
+    @Published public var theme: Theme
+
+    static func createMemoryGame(_ theme: Theme) -> MemoryGame<String> {
+        return MemoryGame<String>(theme.numberOfPairsOfCards) { index in
+            return theme.emojiSet![index]
         }
     }
     init(){
-        
+        //let emojiArray: Array<String> = ["☠️", "🤢", "🤖","😈","👍"]
+        // Color.ornage
+      //  let theme = Theme(name: "try1", numberOfPairedCard: 4, cardBgColor: (.orange), emojiSet: nil )
+        let theme = Theme(name: "try1")
+
+        self.theme = theme
+        self.model = EmojiMemoryGame.createMemoryGame(theme)
+
     }
     //MARK: access to model
     var cards: Array<MemoryGame<String>.Card> {
         model.cards
+    }
+    var bgColor: UIColor {
+        self.theme.cardBgColor!
     }
     var numberOfPairsOfCards: Int {
         cards.count / 2

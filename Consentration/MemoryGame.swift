@@ -34,7 +34,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             
         }
     }
-    init(numberOfPairsOfCards: Int, cardContentFactory: (Int) -> CardContent) {
+    init(_ numberOfPairsOfCards: Int, cardContentFactory: (Int) -> CardContent) {
        cards = Array<Card>()
         for pairIndex in 0..<numberOfPairsOfCards {
             var random: Int = (cards.count > 0) ? Int.random(in: 0...cards.count) : 0;
